@@ -67,6 +67,23 @@ func schema_pkg_apis_samplecontroller_v1alpha1_FooSpec(ref common.ReferenceCallb
 			SchemaProps: spec.SchemaProps{
 				Description: "FooSpec defines the desired state of Foo",
 				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"deploymentName": {
+						SchemaProps: spec.SchemaProps{
+							Description: "the name of deployment which is owned by foo",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"replicas": {
+						SchemaProps: spec.SchemaProps{
+							Description: "the replicas of deployment which is owned by foo",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+				},
+				Required: []string{"deploymentName", "replicas"},
 			},
 		},
 	}
@@ -78,6 +95,16 @@ func schema_pkg_apis_samplecontroller_v1alpha1_FooStatus(ref common.ReferenceCal
 			SchemaProps: spec.SchemaProps{
 				Description: "FooStatus defines the observed state of Foo",
 				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"availableReplicas": {
+						SchemaProps: spec.SchemaProps{
+							Description: "this is equal deployment.status.availableReplicas",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+				},
+				Required: []string{"availableReplicas"},
 			},
 		},
 	}
