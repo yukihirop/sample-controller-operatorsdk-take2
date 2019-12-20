@@ -174,7 +174,7 @@ func (r *ReconcileFoo) Reconcile(request reconcile.Request) (reconcile.Result, e
 
 	// compare foo.spec.replicas and deployment.spec.replicas
 	if foo.Spec.Replicas != nil && *foo.Spec.Replicas != *deployment.Spec.Replicas {
-		reqLogger.Info("unmatch spec","foo.spec.replicas", foo.Spec.Replicas, "deployment.spec.replicas", deployment.Spec.Replicas)
+		reqLogger.Info("unmatch spec", "foo.spec.replicas", foo.Spec.Replicas, "deployment.spec.replicas", deployment.Spec.Replicas)
 		reqLogger.Info("Deployment replicas is not equal Foo replicas. reconcile this...")
 		// Update deployment spec
 		if err := r.client.Update(ctx, newDeployment(foo)); err != nil {
@@ -223,7 +223,7 @@ func (r *ReconcileFoo) cleanupOwnedResources(ctx context.Context, foo *samplecon
 	deployments := &appsv1.DeploymentList{}
 	labelSelector := labels.SelectorFromSet(labelsForFoo(foo.Name))
 	listOps := &client.ListOptions{
-		Namespace: foo.Namespace,
+		Namespace:     foo.Namespace,
 		LabelSelector: labelSelector,
 	}
 	if err := r.client.List(ctx, listOps, deployments); err != nil {
@@ -233,7 +233,7 @@ func (r *ReconcileFoo) cleanupOwnedResources(ctx context.Context, foo *samplecon
 
 	// Delete deployment if the deployment name doesn't match foo.spec.deploymentName
 	for _, deployment := range deployments.Items {
-		if deployment.Name = foo.Spec.DeploymentName {
+		if deployment.Name == foo.Spec.DeploymentName {
 			// If this deployment's name matches the one on the Foo resource
 			// then do not delete it.
 			continue
