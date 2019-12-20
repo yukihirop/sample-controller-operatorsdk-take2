@@ -187,7 +187,7 @@ func (r *ReconcileFoo) Reconcile(request reconcile.Request) (reconcile.Result, e
 		return reconcile.Result{}, nil
 	}
 
-		/*
+	/*
 		### 5: Update foo status.
 		if foo.Status.AvailableReplicas doesn't match deployment.Status.AvailableReplicas,
 		we need to update foo.Status.AvailableReplicas.
@@ -208,7 +208,7 @@ func (r *ReconcileFoo) Reconcile(request reconcile.Request) (reconcile.Result, e
 
 		reqLogger.Info("updated Foo status", "foo.status.availableReplicas", foo.Status.AvailableReplicas)
 	}
-	
+
 	return reconcile.Result{}, nil
 }
 
@@ -226,7 +226,7 @@ func (r *ReconcileFoo) cleanupOwnedResources(ctx context.Context, foo *samplecon
 		Namespace:     foo.Namespace,
 		LabelSelector: labelSelector,
 	}
-	if err := r.client.List(ctx, listOps, deployments); err != nil {
+	if err := r.client.List(ctx, deployments, listOps); err != nil {
 		reqLogger.Error(err, "failed to get list of deployments")
 		return err
 	}
